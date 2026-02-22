@@ -5,169 +5,86 @@
 <h1>osTicket - Ticket Lifecycle: Intake Through Resolution</h1>
 This tutorial outlines the lifecycle of a ticket from intake to resolution within the open-source help desk ticketing system osTicket.<br />
 
-<h1>OsTicket Lab on Azure</h1>
 
-<h2>Description</h2>
-In this lab we will install a ticketing system on a local server that is running on a Windows 10 Pro virtual machine. For this project, we will be utilizing OsTicket as our ticketing software and Microsoft's Azure as our cloud platform to spin up our virtual machine. We will also utilize Internet Information Services (IIS), MySQL and Heidi SQL to set up our local server so that we can access our ticketing system from a web browser like a portal. By the end of this lab, our setup will resemble any ticketing system utilized for the technical support operations of an IT department and can serve as an environment to explore and learn the parameters of working a ticket for an IT Help Desk Technician. 
-<br><br>
-We will first create a virtual machine on Microsoft Azure, choosing Windows 10 Pro as our Operating System which will enable us to set up a local server. Then, we will access this VM from our own personal computer through Microsoft's Remote Desktop Connection. After we are connected, we will set up and configure a local server to act as a host for our ticketing system application, using IIS, MySQL and Heidi SQL. This will allow us to create a webpage to act as our portal. Finally, we will install OsTicket, and configure it to resemble a standard environment for a ticketing system. We will achieve this by creating:
-<br><br>
-- Users who have issues and access the portal to create tickets
-<br>
-- Technical support agents who respond to the tickets and close them out
-<br>
-- A system administrator who manages Service Level Agreements (SLAs), creates teams of Help Desk Agents assigned to different IT areas, and assigns the tickets to agents as they come in. 
-<br><br>
-Configuring and running this lab will help to develop our comprehension of how to set up, configure and operate a typical ticketing system, along with building our confidence in working tickets to resolve technical support requests, using a Remote Desktop Connection, introducing us to using a server, and finally using a cloud platform for our computing needs.
-</br>
+</div>
 
-<h2>Software and Utilities Used</h2>
+# 🧠 Technologies Used
+- osTicket (Help Desk Ticketing System)
+- Microsoft Azure (Cloud Computing)
+- Remote Desktop
+- Windows 10 Professional x64 22H2
 
-- <b>Microsoft Azure</b>
-- <b>Remote Desktop Connection</b>
-- <b>Windows 10 Pro</b> (22H2)
-- <b>Internet Information Services (IIS)</b>
-- <b>PHP Manager for IIS version 1.5.0</b>
-- <b>PHP 7.3.8</b>
-- <b>Rewrite Module</b>
-- <b>MySQL 5.5.62</b>
-- <b>Heidi SQL 12.3.0.6589</b>
-- <b>Visual C++ Redistributible x86 - 14.34.31931 </b>
-- <b>OsTicket v1.15.8</b>
+# 📝 Ticket Lifecycle Stages
+- Intake
+- Assignment & Communication
+- Working the Issue
+- Resolution
 
-<h2>Program walk-through:</h2>
+# ♻️ Ticket Lifecycle Examples: From Intake to Resolution
 
+### 📩 Intake
+1. Navigate to `localhost/osTicket/index.php` and click the blue `Open a New Ticket` button.
 
-1. Our first step in the lab will be to create a Resource group on Azure, and then create a Virtual Machine running Windows 10 pro within that resource group. After entering the parameters we want, with an easy to remember user name and password (suitable for our testing environment, not in real usage where passwords should be more complex) and reviewing the set up, press create and allow some time for the machine to spin up. After that is done, on our personal computer, we will open Remote Desktop Connection (whether Windows or Mac) and enter the public IP address we copied from the overview screen of our VM. A screen will pop asking us to connect anyway, where we will hit yes, and then another one will ask us for our credentials. After we adjust the privacy settings on Windows required for the first time use, we will be into a standard Windows desktop environment, ready for our next step. 
+<img src="/images/open-new-ticket.png" alt="Open New Ticket">
 
-<details>
+2. Proceed to fill out the following fields with the relevant ticket information:
+    - **Email Address**: The email address of whoever is submitting the ticket
+    - **Full Name**: The full name of whoever is submitting the ticket
+    - **Help Topic**: Click on the drop-down menu and select the issue that best fits with the issue in which the ticket is regarding
+    - **Issue Summary** In the first field, enter a brief title for the issue and then proceed to the second field where a more detailed description is optional but recommended
 
-<summary>Expand images</summary>
+In the end-user-created ticket example below, `Jane Doe` (best reached at `jane.doe1999@gmail.com` or `999-999-9999`) is submitting a ticket regarding her trouble to access online mobile banking.
 
-<img src="https://i.imgur.com/ghVNMmZ.jpg" height="80%" width="80%" />
-<img src="https://i.imgur.com/HulY6H8.jpg" height="80%" width="80%" />
-<img src="https://i.imgur.com/9e1n0U6.jpg" height="80%" width="80%" />
-<img src="https://i.imgur.com/S7YaF1l.jpg" height="80%" width="80%" />
-<img src="https://i.imgur.com/D7UjWNV.jpg" height="80%" width="80%" />
-<img src="https://i.imgur.com/8Xis8Eo.jpg" height="80%" width="80%" />
+<img src="/images/end-user-ticket.png" alt="End User Ticket">
 
+### 💬 Assignment & Communication
+1. Navigate to `localhost/osTicket/scp/login.php` and enter the credentials for the administrator that will assign an Agent to work on the ticket created during Intake.
 
-</details>
+<img src="/images/admin-credentials.jpg" alt="Admin Credentials">
 
-2. Our next step will be to enable IIS in Windows with CGI, Common HTTP Features and IIS Management Console. To do that, first open the control panel, and go to Programs. There, under programs or features, we will go to "Turn Windows Features on or off" and in the pop-up go down to World Wide Web Services->Application Development Features->Select CGI. Next we will go to another subfolder in World Wide Web Services->Common HTTP Features and select every feature. After those selections, hit "OK" and the Windows Features screen will say these changes have been completed. Then we will enable IIS Management Console by going to Internet Information Services -> Web Management Tools -> IIS Management Console and select IIS Management Console. After that we will select OK, and then we can open up the Edge browser, select the privacy/information settings desired, and enter the Home/Loopback address 127.0.0.1 to see that we have IIS enabled. 
+2. Navigate to `Tickets` > ` Open` and then open the ticket by clicking the ticket number under the **Ticket** column.
 
-<details>
+<img src="/images/open_ticket_as_admin.png" alt="Open Ticket as Admin">
 
-<summary>Expand images</summary>
+3. From here, set the **Priority**, **Assign Department**, **Assigned To**, and the **SLA Plan** values for this ticket.
 
-<img src="https://i.imgur.com/vfiGyh3.jpg" height="80%" width="80%" />
-<img src="https://i.imgur.com/Z0kInxM.jpg" height="80%" width="80%" />
-<img src="https://i.imgur.com/H9c8PJz.jpg" height="80%" width="80%" />
-<img src="https://i.imgur.com/nSedYuE.jpg" height="80%" width="80%" />
-<img src="https://i.imgur.com/tJcOfSW.jpg" height="80%" width="80%" />
+In the example below, the admin first clicks on the greyed out `— Unassigned —` text that's located to the right of **Assigned To**. Then, the admin designates `Luke Skywalker` as the **Assignee**.
 
-</details>
+<img src="/images/assign-agent-to-ticket.png" alt="Assign Agent to Ticket">
 
-3. After setting up IIS, we can download and install PHP Manager for IIS and the Apache rewrite module. Then, after downloading PHP 7.3.8, in the C: drive of our VM, create the directory C:\PHP, and unzip the contents into that folder. Then we will download and install Microsoft Visual C++ redistributable. Next, download MySQL Server 5.5 and launch the intallation wizard, choosing a typical setup and configuration, and choosing an easy-to-remember password. After all that, we can open IIS as an Administrator, register PHP from within IIS, and reload IIS, stopping and restarting the server. Our local server should now be running and we can install OsTicket.
+After the agent has been assigned to this particular ticket, the admin sets the **Priority** to `High`, the **Department** to `Support`, and the **SLA Plan** to `SEV-A`.
 
-<details>
+<img src="/images/filled-ticket-info.png" alt="Filled Ticket Info">
 
-<summary>Expand images</summary>
+4. Within the ticket tab, you can see the thread of any updates to the ticket and submit updates upon assignment. Once finished, click the orange `Post Reply` button and the ticket gets assigned to the appropriate department and your customer gets notified of this change.
 
-<img src="https://i.imgur.com/lfB20ti.jpg" height="80%" width="80%" />
-<img src="https://i.imgur.com/K2cr2Je.jpg" height="80%" width="80%" />
-<img src="https://i.imgur.com/8lw6bJE.jpg" height="80%" width="80%" />
-<img src="https://i.imgur.com/GkM7LaG.jpg" height="80%" width="80%" />
-<img src="https://i.imgur.com/DuCVa9k.jpg" height="80%" width="80%" />
-<img src="https://i.imgur.com/2TuVoWD.jpg" height="80%" width="80%" />
-<img src="https://i.imgur.com/ggXfZfV.jpg" height="80%" width="80%" />
-<img src="https://i.imgur.com/h5QdzB7.jpg" height="80%" width="80%" />
-<img src="https://i.imgur.com/C8x4cWs.jpg" height="80%" width="80%" />
-<img src="https://i.imgur.com/pinOt39.jpg" height="80%" width="80%" />
-<img src="https://i.imgur.com/kTUYPku.jpg" height="80%" width="80%" />
-<img src="https://i.imgur.com/4NPrMGG.jpg" height="80%" width="80%" />
-<img src="https://i.imgur.com/hsXnkA1.jpg" height="80%" width="80%" />
-<img src="https://i.imgur.com/N4OWFaP.jpg" height="80%" width="80%" />
-<img src="https://i.imgur.com/nI8LmQb.jpg" height="80%" width="80%" />
+<img src="/images/ticket-timeline.png" alt="Ticket Timeline">
 
-</details>
+### 🛠️ Working the Issue
+1. Navigate to `localhost/osTicket/scp/login.php` and enter the credentials for the Agent that has been assigned to work on the ticket created during Intake.
 
-4. To install OsTicket (in this case v1.15.8), download the software, and from the download folder, extract and copy the "upload" folder into C:\inetpub\wwwroot. Within that folder, rename "upload" to "osTicket". Reload IIS after that, by opening it up, stopping then restarting the server. Next, go to sites -> Default -> osTicket, and on the right, click "Browse *:80". This will load the software to run on our server. However, as we can see on our browser, some necessary extensions for OsTicket are not enabled, so we will change that. Back on IIS, click on sites -> Default -> osTicket, double click "PHP Manager", click "Enable or disable an extension" and enable php_impad.dll, php_intl.dll, php_opcache.dll. After refreshing the osTicket site in our browser, we can see some changes. Finally, we will rename ost-config.php by changing in file explorer C:\inetpub\wwwroot\osTicket\include\ost-sampleconfig.php to C:\inetpub\wwwroot\osTicket\include\ost-config.php. Then right clicking on this file, we will change the permissions by disabling inheritance -> Remove All and add New Permissions -> Everyone -> All.  
+<img src="/images/agent-credentials.png" alt="Agent Credentials">
 
-<details>
-<summary>Expand images</summary>
+2. Once logged in, the Tickets window shows. It will show the ticket number, the last time it was updated, the subject, who submitted the ticket, priority level, and who it is assigned to. The Agent must click on the ticket number to open it so that they can begin working through the problem.
 
-<img src="https://i.imgur.com/Fr1jNi4.jpg" height="80%" width="80%" />
-<img src="https://i.imgur.com/JfsAgoc.jpg" height="80%" width="80%" />
-<img src="https://i.imgur.com/rkWUYx8.jpg" height="80%" width="80%" />
-<img src="https://i.imgur.com/7K5Sr2D.jpg" height="80%" width="80%" />
-<img src="https://i.imgur.com/MR0qnHg.jpg" height="80%" width="80%" />
-<img src="https://i.imgur.com/T5uLtco.jpg" height="80%" width="80%" />
-<img src="https://i.imgur.com/BNxouS0.jpg" height="80%" width="80%" />
-<img src="https://i.imgur.com/lMZ3vkA.jpg" height="80%" width="80%" />
-<img src="https://i.imgur.com/aT2rekg.jpg" height="80%" width="80%" />
+<img src="/images/tickets-window.png" alt="Tickets Window">
 
-</details>
+3. Once the ticket is opened, you can review all ticket items and the history of the ticket items. This includes who submitted the ticket, who assigned the ticket, and any other ticket activity. The bottom section is where you can leave a reply for the user who submitted the ticket and an internal note to notify management if the ticket has been resolved.
 
-5. Now we can finalize the setup of OsTicket on our server. First we will continue with the install of OsTicket on our browser by inputting the Name of "Helpdesk" and a default email. Then we will download and install HeidiSQL (our version was 12.3.0.6589), open it, create a new session with "root/Password12345", connect to the session, and create a database called "osTicket". Then we can go back to the browser and finalize OsTicket. Input "osTicket" in MySQL database, "root" in MySQL Username and "Password12345" (or whatever you like) in MySQL Password, and click "Install Now!". Finally our setup of OsTicket is ready to explore (hopefully with no errors!), so we should just clean it up by deleting C:\inetpub\wwwroot\osTicket\setup and on C:\inetpub\wwwroot\osTicket\include\ost-config.php set permissions to "Read" only. Browse to http://localhost/osTicket/scp/login.php to see if our portal is operating as it should!
+<img src="/images/opened-ticket.png" alt="Opened Ticket">
 
-<details>
+4. Once the Agent (Luke Skywalker) has reviewed all of the ticket details and identified a solution to the problem, the Agent can then use the **Post Reply** section to write a note to the user (Jane Doe) explaining everything, including the solution, in a professional manner.
 
-<summary>Expand images</summary>
+<img src="/images/agent-works-the-issue.png" alt="Agent Works the Issue">
 
-<img src="https://i.imgur.com/3b5zjf3.jpg" height="80%" width="80%" />
-<img src="https://i.imgur.com/NPJOrDD.jpg" height="80%" width="80%" />
-<img src="https://i.imgur.com/2RzdHrk.jpg" height="80%" width="80%" />
-<img src="https://i.imgur.com/PPt2yhw.jpg" height="80%" width="80%" />
-<img src="https://i.imgur.com/ErFZ4yM.jpg" height="80%" width="80%" />
-<img src="https://i.imgur.com/2spSyi9.jpg" height="80%" width="80%" />
-<img src="https://i.imgur.com/I6rfvyZ.jpg" height="80%" width="80%" />
-<img src="https://i.imgur.com/qHeYh1O.jpg" height="80%" width="80%" />
-<img src="https://i.imgur.com/h7MqZkt.jpg" height="80%" width="80%" />
+### ❤️‍🩹 Resolution
 
-</details>
+1. Before the user presses the orange `Post Reply` button to send the message to the user, it is important to navigate to the **Ticket Status** drop-down menu and change the value from `Open (current)` to `Closed`.
 
-6. Now that OsTicket is installed, we can login through the portal using our admin credentials we chose earlier. Entering it, we see the first "ticket" is a welcome message. The first step in our administrative tasks is to create roles. Roles are the permissions granted to Agents per Department that they have access to. Let's create a role called "Supreme Admin" with all the permissions available. Then, we can create a new department. Departments are where tickets are routed through. We will create one called "System Administrators", which we can set to receive all tickets. Next we can create Teams. Teams allow you to pull Agents from different Departments and organize them to handle a specific issue, so for example, we could create a team of Tier II agents who are the Subject Matter Experts (SMEs) from different departments. Let's do that, as a Level I Support Team is already created. Now we can create some agents. Agents are given access to the help desk with the intent to respond and resolve the tickets. We'll create Jane and John, and assign them certain permissions. Our next step is to create some users, who will represent customers or perhaps employees from other departments of a company. Users are the ticket owners of the tickets in the help desk. When a ticket is created, their email address will be associated with the ticket for communication purposes. For our second last step we can create a Service Level Agreement (SLA) plan. The purpose of the SLA Plan is to provide a length of time in which the help desk Administrator expects tickets to be closed. We will create SEV-A, SEV-B and SEV-C with typical response periods depending on the severity of the incident: from 24/7 within an hour, to 24/7 within 4 hours to 9-5 business days within 8 hours, respectively. Finally, we will create some "Help Topics", which are intended for users to select the type of issue they are experiencing, helping to streamline the help desk operations. 
-<br><br>
-We now have a nicely configured help desk to test out. Let's create a few tickets and see how to work a ticket as a help desk technician!
+<img src="/images/close-the-ticket.png" alt="Close the Ticket">
 
-<details>
- 
- <summary>Expand images</summary>
- 
-<img src="https://i.imgur.com/F3wqaB1.jpg" height="80%" width="80%" />
-<img src="https://i.imgur.com/2QtwUCJ.jpg" height="80%" width="80%" />
-<img src="https://i.imgur.com/e1myDBV.jpg" height="80%" width="80%" />
-<img src="https://i.imgur.com/6eac90w.jpg" height="80%" width="80%" />
-<img src="https://i.imgur.com/Tv5qWdR.jpg" height="80%" width="80%" />
-<img src="https://i.imgur.com/A8AHYYZ.jpg" height="80%" width="80%" />
-<img src="https://i.imgur.com/NCpTHsp.jpg" height="80%" width="80%" />
-<img src="https://i.imgur.com/qYtqiX2.jpg" height="80%" width="80%" />
-<img src="https://i.imgur.com/SDuf2IX.jpg" height="80%" width="80%" />
-<img src="https://i.imgur.com/VzwjbPY.jpg" height="80%" width="80%" />
-<img src="https://i.imgur.com/7u5QPiI.jpg" height="80%" width="80%" />
-<img src="https://i.imgur.com/Isazh8C.jpg" height="80%" width="80%" />
- 
- </details>
- 
-7. Now we can create a ticket as a user as see what being a Technical Support agent is really like! Logging in as one of our users, let's send a request describing a serious, SEV-A event, where the mobile banking website is down. We will also create a few other tickets with less severe SEV-B and SEV-C type events, namely a department being unable to access their Adobe PDF reader, and a request for new equipment. When we log out as a user and log back in as our Admin, we can see the option to delegate tickets to other agents, or take measures necessary as an Admin. Logging in as an agent, we can see the tickets that have been assigned to us. We can also practice reponding professionally to the users and our colleagues, detailing how a ticket might be passed off with a "warm handoff" via telephone. All these are great examples of the ticket lifestyle and working tickets, and closing them out. When we brose "Closed", we can see our tickets after they are closed. These can be useful for a new Help Desk agent to study to see how things are done at a corporation, to see some common problems that might come up and how they are resolved. Very cool!
- 
- <details>
-  
-  <summary>Expand images</summary>
-  
-<img src="https://i.imgur.com/vx8yHBh.jpg" height="80%" width="80%" />
-<img src="https://i.imgur.com/bz6cGSR.jpg" height="80%" width="80%" />
-<img src="https://i.imgur.com/NXYN1Cr.jpg" height="80%" width="80%" />
-<img src="https://i.imgur.com/B1cteYg.jpg" height="80%" width="80%" />
-<img src="https://i.imgur.com/lhKSFxN.jpg" height="80%" width="80%" />
-<img src="https://i.imgur.com/vzJrGCn.jpg" height="80%" width="80%" />
-<img src="https://i.imgur.com/6vLXlLT.jpg" height="80%" width="80%" />
-<img src="https://i.imgur.com/qieyGJd.jpg" height="80%" width="80%" />
+2. Then, osTicket will take the Agent back to the Tickets tab. The Agent will then see a confirmation that the reply was posted successfully. As pictured below, ticket `#325542` by Jane Doe is no longer showing in the **Open** tickets section. Additionally, there is a visual confirmation banner at the top that says `Ticket #325542: Reply posted successfully`.
 
- </details>
- 
- 
- <br><br>Our lab is now hopefully functioning well as a ticketing system, and we can explore our set up!
+<img src="/images/ticket-closed-confirmation.png" alt="Ticket Closed Confirmation">
 
-</br>
+3. To view tickets that have been closed, Agents can navigate to `Tickets` > `Closed` > and then click the appropriate time frame that this ticket is from. From here, the Agent should see closed ticket in question.
